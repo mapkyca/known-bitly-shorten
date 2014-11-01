@@ -1,0 +1,1 @@
+<li <?php if ($_SERVER['REQUEST_URI'] == '/account/bitly/') echo 'class="active"'; ?>><a href="/account/bitly/">Bitly</a></li>

@@ -26,10 +26,12 @@
                 //$consumer_secret = $this->getInput('consumer_secret');
 		
 		$generic_access_token = $this->getInput('generic_access_token');
+		$appId = $this->getInput('client_id');
+                $secret = $this->getInput('client_secret');
 		
                 \Idno\Core\site()->config->config['bitly'] = [
-                //    'consumer_key' => $consumer_key,
-                //    'consumer_secret' => $consumer_secret
+		    'client_id' => $appId,
+                    'client_secret' => $secret,
 		    'generic_access_token' => $generic_access_token
                 ];
                 \Idno\Core\site()->config()->save();
