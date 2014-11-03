@@ -33,7 +33,7 @@ namespace IdnoPlugins\Bitly {
 	 * Can the current user use Bitly?
 	 * @return bool
 	 */
-	function hasBitly($user) {
+	function hasBitly($user = null) {
 	    if (!$user) $user=\Idno\Core\site()->session()->currentUser();
 	    if (\Idno\Core\site()->session()->currentUser()->bitly) {
 		return true;
