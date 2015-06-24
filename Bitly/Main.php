@@ -73,6 +73,7 @@ namespace IdnoPlugins\Bitly {
 			    // Load/create lookup table
 			    $urls = $object->url_expansion_lookup;
 			    if (!$urls) $urls = [];
+			    $updated = false;
 			    
 			    // Find urls
 			    if (preg_match_all('#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#', $body, $matches))
@@ -94,8 +95,10 @@ namespace IdnoPlugins\Bitly {
 					    ]);
 
 					    $result = json_decode($result['content']);
-					    if (isset($result->data->expand[0]->long_url))
+					    if (isset($result->data->expand[0]->long_url)) {
 						$longurl = $result->data->expand[0]->long_url;
+						$updated = true;
+					    }
 					}
 					
 					// Now try GAT
@@ -106,8 +109,10 @@ namespace IdnoPlugins\Bitly {
 					    ]);
 
 					    $result = json_decode($result['content']);
-					    if (isset($result->data->expand[0]->long_url))
+					    if (isset($result->data->expand[0]->long_url)) {
 						$longurl = $result->data->expand[0]->long_url;
+						$updated = true;
+					    }
 					}
 				    }
 				    
@@ -122,7 +127,7 @@ namespace IdnoPlugins\Bitly {
 			    }
 			    
 			    // Save updated urls list
-			    if (!empty($urls))
+			    if ((!empty($urls)) && ($updated))
 			    {
 				$object->url_expansion_lookup = $urls;
 				$object->save();
