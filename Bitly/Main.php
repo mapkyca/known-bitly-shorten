@@ -35,7 +35,7 @@ namespace IdnoPlugins\Bitly {
 	 */
 	function hasBitly($user = null) {
 	    if (!$user) $user=\Idno\Core\site()->session()->currentUser();
-	    if (\Idno\Core\site()->session()->currentUser()->bitly) {
+	    if (!empty($user) && $user->bitly) {
 		return true;
 	    }
 	    return false;
