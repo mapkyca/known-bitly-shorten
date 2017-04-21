@@ -79,9 +79,14 @@ namespace IdnoPlugins\Bitly {
 			    if (preg_match_all('#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#', $body, $matches))
 			    {
 				foreach($matches[0] as $match) {
+			    
+				    \Idno\Core\Idno::site()->logging()->debug("Attempting to expand link: $match");
 				    
 				    $longurl = false;
 				    if (isset($urls[$match])) {
+					
+					\Idno\Core\Idno::site()->logging()->debug("Already have $match as " .$urls[$match]);
+					
 					$longurl = $urls[$match];
 				    } else {
 					
@@ -98,6 +103,8 @@ namespace IdnoPlugins\Bitly {
 					    if (isset($result->data->expand[0]->long_url)) {
 						$longurl = $result->data->expand[0]->long_url;
 						$updated = true;
+						
+						\Idno\Core\Idno::site()->logging()->debug("Found $match as $longurl");
 					    }
 					}
 					
@@ -112,6 +119,8 @@ namespace IdnoPlugins\Bitly {
 					    if (isset($result->data->expand[0]->long_url)) {
 						$longurl = $result->data->expand[0]->long_url;
 						$updated = true;
+						
+						\Idno\Core\Idno::site()->logging()->debug("Found $match as $longurl");
 					    }
 					}
 				    }
