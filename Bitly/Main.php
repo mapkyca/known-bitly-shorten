@@ -83,11 +83,11 @@ namespace IdnoPlugins\Bitly {
 				    \Idno\Core\Idno::site()->logging()->debug("Attempting to expand link: $match");
 				    
 				    $longurl = false;
-				    if (isset($urls[$match])) {
+				    if (isset($urls[md5($match)])) {
 					
-					\Idno\Core\Idno::site()->logging()->debug("Already have $match as " .$urls[$match]);
+					\Idno\Core\Idno::site()->logging()->debug("Already have $match as " . $urls[md5($match)]);
 					
-					$longurl = $urls[$match];
+					$longurl = $urls[md5($match)];
 				    } else {
 					
 					// We haven't encountered this url, so try and expand it
@@ -126,7 +126,7 @@ namespace IdnoPlugins\Bitly {
 				    }
 				    
 				    // Save expanded form, or that we failed.
-				    $urls[$match] = $longurl;
+				    $urls[md5($match)] = $longurl;
 				    
 				    // Now do a replace
 				    if ($longurl!==false) {
