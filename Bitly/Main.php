@@ -105,6 +105,12 @@ namespace IdnoPlugins\Bitly {
 						$updated = true;
 						
 						\Idno\Core\Idno::site()->logging()->debug("Found $match as $longurl");
+					    } else if ((isset($result->error->data->expand[0])) && ($result->data->expand[0]->error == 'NOT_FOUND')) {
+						
+						\Idno\Core\Idno::site()->logging()->debug("Short url for $match not found, probably a long url already");
+						
+						$longurl = $match;
+						$updated = true;
 					    }
 					}
 					
@@ -114,13 +120,19 @@ namespace IdnoPlugins\Bitly {
 							'access_token' => \Idno\Core\site()->config->config['bitly']['generic_access_token'],
 							'shortUrl' => $match
 					    ]);
-
+					    
 					    $result = json_decode($result['content']);
 					    if (isset($result->data->expand[0]->long_url)) {
 						$longurl = $result->data->expand[0]->long_url;
 						$updated = true;
 						
 						\Idno\Core\Idno::site()->logging()->debug("Found $match as $longurl");
+					    } else if ((isset($result->data->expand[0]->error)) && ($result->data->expand[0]->error == 'NOT_FOUND')) {
+						
+						\Idno\Core\Idno::site()->logging()->debug("Short url for $match not found, probably a long url already");
+						
+						$longurl = $match;
+						$updated = true;
 					    }
 					}
 				    }
