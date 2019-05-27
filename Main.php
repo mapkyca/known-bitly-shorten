@@ -48,17 +48,17 @@ namespace IdnoPlugins\Bitly {
 	function registerPages() {
 
 	    // Register admin settings
-	    \Idno\Core\site()->addPageHandler('admin/bitly', '\IdnoPlugins\Bitly\Pages\Admin');
+	    \Idno\Core\Idno::site()->routes()->addRoute('admin/bitly', '\IdnoPlugins\Bitly\Pages\Admin');
 	    \Idno\Core\site()->template()->extendTemplate('admin/menu/items', 'admin/bitly/menu');
 
-	    \Idno\Core\site()->addPageHandler('account/bitly', '\IdnoPlugins\Bitly\Pages\Account');
+	    \Idno\Core\Idno::site()->routes()->addRoute('account/bitly', '\IdnoPlugins\Bitly\Pages\Account');
 	    \Idno\Core\site()->template()->extendTemplate('account/menu/items', 'account/bitly/menu');
 
 	    // Register the callback URL
-	    \Idno\Core\site()->addPageHandler('bitly/callback', '\IdnoPlugins\Bitly\Pages\Callback');
+	    \Idno\Core\Idno::site()->routes()->addRoute('bitly/callback', '\IdnoPlugins\Bitly\Pages\Callback');
 
 	    // Listen to link text expand
-	    \Idno\Core\site()->addEventHook('url/expandintext', function(\Idno\Core\Event $event) {
+	    \Idno\Core\Idno::site()->events()->addListener('url/expandintext', function(\Idno\Core\Event $event) {
 		
 		if ($object = $event->data()['object']) {
 		
@@ -163,7 +163,7 @@ namespace IdnoPlugins\Bitly {
 	    });
 	    
 	    // Handle shorten event
-	    \Idno\Core\site()->addEventHook('url/shorten', function(\Idno\Core\Event $event) {
+	    \Idno\Core\Idno::site()->events()->addListener('url/shorten', function(\Idno\Core\Event $event) {
 
 		// Try user binding first
 		if ($this->hasBitly()) {
