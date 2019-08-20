@@ -1,8 +1,11 @@
 {
-    "name": "idno/known-bitly-shorten",
+    "name": "mapkyca/known-bitly-shorten",
     "type": "known-plugin",
     "description": "Provides Bitly link shortening capability to Known and it's share api",
     "version": "1.1.0",
+    "require": {
+        "composer/installers": "~1.0"
+    },
     "extra": {
         "installer-name": "Bitly"
     }
